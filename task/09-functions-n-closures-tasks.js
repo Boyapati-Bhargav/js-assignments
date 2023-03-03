@@ -9,7 +9,7 @@
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures                           *
  *                                                                                            *
  **********************************************************************************************/
-
+//8 tasks //9
 
 /**
  * Returns the functions composition of two specified functions f(x) and g(x).
@@ -26,7 +26,10 @@
  *
  */
 function getComposition(f,g) {
-    throw new Error('Not implemented');
+    return function(x)
+    {
+        return f(g(x));
+    }
 }
 
 
@@ -47,7 +50,10 @@ function getComposition(f,g) {
  *
  */
 function getPowerFunction(exponent) {
-    throw new Error('Not implemented');
+    return function(x)
+    {
+        return Math.pow(x,exponent);
+    }   
 }
 
 
@@ -65,7 +71,15 @@ function getPowerFunction(exponent) {
  *   getPolynom()      => null
  */
 function getPolynom() {
-    throw new Error('Not implemented');
+    if (arguments.length == 0) 
+    {
+        return null;
+    } 
+    else 
+    {
+        return (x) => Array.from(arguments).reduce(
+            (sum, elem, index) => sum + elem * Math.pow(x, arguments.length - 1 - index), 0);
+    }
 }
 
 
@@ -84,7 +98,14 @@ function getPolynom() {
  *   memoizer() => the same random number  (next run, returns the previous cached result)
  */
 function memoize(func) {
-    throw new Error('Not implemented');
+    let memo = null;
+
+    return function() {
+        if (memo)
+            return memo;
+        else
+            return (memo = func.apply(this));
+    }
 }
 
 
@@ -104,7 +125,15 @@ function memoize(func) {
  * retryer() => 2
  */
 function retry(func, attempts) {
-    throw new Error('Not implemented');
+    return function() {
+        while(attempts >= 0) {
+            try {
+                return func();
+            } catch (err) {
+                attempts--;
+            }
+        } 
+    }
 }
 
 
@@ -132,7 +161,14 @@ function retry(func, attempts) {
  *
  */
 function logger(func, logFunc) {
-    throw new Error('Not implemented');
+    return function() {
+        let funcName = `${func.name}(${JSON.stringify(Array.from(arguments)).slice(1,-1)})`;
+
+        logFunc(`${funcName} starts`);
+        let result = func.apply(this, arguments);
+        logFunc(`${funcName} ends`);
+        return result;
+}
 }
 
 
@@ -150,7 +186,11 @@ function logger(func, logFunc) {
  *   partialUsingArguments(fn, 'a','b','c','d')() => 'abcd'
  */
 function partialUsingArguments(fn) {
-    throw new Error('Not implemented');
+    let args = Array.from(arguments).slice(1);
+
+    return function () {
+        return fn.apply(this, args.concat(Array.from(arguments)));
+    }
 }
 
 
@@ -171,9 +211,11 @@ function partialUsingArguments(fn) {
  *   getId10() => 11
  */
 function getIdGeneratorFunction(startFrom) {
-    throw new Error('Not implemented');
+    return function()
+    {
+        return startFrom++;
+    }
 }
-
 
 module.exports = {
     getComposition: getComposition,
