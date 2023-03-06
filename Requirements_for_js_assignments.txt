@@ -1,0 +1,7 @@
+☛ All test cases are present in test folder
+
+☛ Write the neccessary code for those test cases in task folder
+
+☛ Write code for each task file in task folder related to each test file in test folder
+
+☛ Ignore kata tasks
